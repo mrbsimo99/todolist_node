@@ -1,8 +1,12 @@
-const { User } = require("../db/models/User");
-const { AuthError } = require("../db");
-const jwt = require("jsonwebtoken");
+const { User } = require("../db");
+const { AuthError } = require("../errors");
 const { outErrors } = require("../api/controllers/auth");
-const { verifyUserToken } = require("../api/controllers/auth");
+const { verifyUserToken } = require("../utils/auth");
+
+/**
+ * @param {string[]}
+ * @returns {NextFunction|Promise<Error>}
+ */
 
 const authUser = () => async (req, res, next) => {
   try {

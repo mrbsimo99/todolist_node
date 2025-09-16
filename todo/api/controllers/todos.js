@@ -1,5 +1,5 @@
 const Joi = require("joi");
-const { outErrors } = require("../../db"); // Prende outErrors dal file index.js della cartella db
+const { outErrors } = require("../../utils/errors"); // Prende outErrors dal file index.js della cartella db
 const Todo = require("../../db/models/Todo");
 
 /**
@@ -25,6 +25,7 @@ const createTodo = async (req, res) => {
     const schema = Joi.object({
         title: Joi.string().required(),
         description: Joi.string().optional(),
+        completed: Joi.boolean().optional()
     });
 
     try {

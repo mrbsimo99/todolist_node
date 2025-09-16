@@ -2,14 +2,9 @@ const Joi = require("joi");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../../db/models/User");
+const { outErrors } = require("../../utils/errors")
 
 const SECRET = process.env.SECRET_KEY;
-
-const outErrors = (res, error) => {
-  const code = error.code || 500;
-  const message = error.message || "Server Error";
-  return res.status(code).json({ success: false, error: message });
-};
 
 const registerUser = async (req, res) => {
   const schema = Joi.object({
@@ -70,25 +65,8 @@ const loginUser = async (req, res) => {
   }
 };
 
-const verifyUserToken = (req, res, next) => {
-  const authHeader = req.headers["authorization"];
-  if (!authHeader) return res.status(401).json({ success: false, error: "Token mancante" });
-
-  const token = authHeader.split(" ")[1];
-  if (!token) return res.status(401).json({ success: false, error: "Token mancante" });
-
-  try {
-    const decoded = jwt.verify(token, SECRET);
-    req.user = decoded;
-    next();
-  } catch (err) {
-    return res.status(403).json({ success: false, error: "Token non valido" });
-  }
-};
-
 module.exports = {
   registerUser,
   loginUser,
-  verifyUserToken,
   outErrors,
 };

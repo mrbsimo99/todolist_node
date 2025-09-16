@@ -8,12 +8,11 @@ const app = express();
 app.use(express.json());
 
 app.use('/auth', authRoutes);
-app.use('/api/todos', todoRoutes);
+app.use('/api', todoRoutes);
 
 app.get('/', (req, res) => res.send('Server attivo'));
 
-// Connessione a MongoDB
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.DB_CONNECTION_URI)
   .then(() => console.log('MongoDB connesso'))
   .catch(err => console.error(err));
 

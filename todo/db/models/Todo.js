@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const todoSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+const todoSchema = new Schema({
+  userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   title: { type: String, required: true },
-  description: { type: String },
+  description: String,
   completed: { type: Boolean, default: false }
 }, { timestamps: true });
 
